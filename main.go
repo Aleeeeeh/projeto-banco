@@ -3,6 +3,7 @@ package main
 import (
 	"banco/clientes"
 	"banco/contas"
+	"banco/interfaces"
 	"fmt"
 )
 
@@ -35,5 +36,20 @@ func main() {
 	fmt.Println("Resposta da transação:", transferencia)
 	fmt.Println(contaDoGopher)
 	fmt.Println(contaGopherzinho)
+	fmt.Println()
+
+	// & Pois passamos o endereço do objeto
+	var valorBoletoGopher float64
+	fmt.Println("Insira valor do boleto do", contaDoGopher.Titular.Nome)
+	fmt.Scan(&valorBoletoGopher)
+	interfaces.PagarBoleto(&contaDoGopher, valorBoletoGopher)
+
+	var valorBoletoGopherzinho float64
+	fmt.Println("Insira valor do boleto do", contaGopherzinho.Titular.Nome)
+	fmt.Scan(&valorBoletoGopherzinho)
+	interfaces.PagarBoleto(&contaGopherzinho, valorBoletoGopherzinho)
+	fmt.Println(contaDoGopher)
+	fmt.Println(contaGopherzinho)
+
 	fmt.Println("Obrigado e volte sempre !")
 }
