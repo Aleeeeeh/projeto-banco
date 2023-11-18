@@ -1,34 +1,34 @@
 package main
 
-import "fmt"
-
-type ContaCorrente struct {
-	titular       string
-	numeroAgencia int
-	numeroConta   int
-	saldo         float64
-}
+import (
+	"banco/contas"
+	"fmt"
+)
 
 func main() {
-	contaDoGopher := ContaCorrente{}
-	contaDoGopher.saldo = 500
-	fmt.Println("Saldo em conta:", contaDoGopher.saldo)
+	contaDoGopher := contas.ContaCorrente{Titular: "Gopher"}
+
+	var deposito float64
+	fmt.Println("Digite o valor para depósito: ")
+	fmt.Scan(&deposito)
+	status, valor := contaDoGopher.Depositar(deposito)
+	fmt.Println(status, valor)
+
+	fmt.Println("Saldo em conta do gopher:", contaDoGopher.Saldo)
 	var saque float64
 	fmt.Println("Digite o valor do saque: ")
 	fmt.Scan(&saque)
-
 	fmt.Println(contaDoGopher.Sacar(saque))
-	fmt.Println("Saldo atualizado:", contaDoGopher.saldo)
-}
+	fmt.Println("Saldo atualizado da conta do gopher:", contaDoGopher.Saldo)
 
-// c *ContaCorrente faz o método ser referência da struct ContaCorrente
-func (c *ContaCorrente) Sacar(valorDoSaque float64) string {
-	podeSacar := valorDoSaque > 0 && valorDoSaque <= c.saldo
+	contaGopherzinho := contas.ContaCorrente{Titular: "Gopherzinho"}
 
-	if podeSacar {
-		c.saldo -= valorDoSaque
-		return "Saque realizado com sucesso"
-	}
-
-	return "Saldo insuficiente"
+	var valorTransferencia float64
+	fmt.Println("Insira valor da transferência para conta do gopherzinho: ")
+	fmt.Scan(&valorTransferencia)
+	transferencia := contaDoGopher.Transferir(valorTransferencia, &contaGopherzinho)
+	fmt.Println("Resposta da transação:", transferencia)
+	fmt.Println(contaDoGopher)
+	fmt.Println(contaGopherzinho)
+	fmt.Println("Obrigado e volte sempre !")
 }
